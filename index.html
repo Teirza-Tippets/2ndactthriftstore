@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2nd Act Thrift Store | Victor, Idaho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f3;--card:#fff;--ink:#17262b;--mute:#52646a;--curtain:#7b1e2e;--gold:#f0b93b;--sage:#dbe5dc;--line:#cdd8cf;--on-curtain:#fff;--hl:#7b1e2e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121b1e;--card:#1b282c;--ink:#eef2ee;--mute:#a3b4b8;--curtain:#a52a3f;--sage:#22332f;--line:#2f4146;--hl:#f0b93b}}
+:root[data-theme="dark"]{--bg:#121b1e;--card:#1b282c;--ink:#eef2ee;--mute:#a3b4b8;--curtain:#a52a3f;--sage:#22332f;--line:#2f4146;--hl:#f0b93b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:110px;height:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.35rem;text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo b{background:var(--curtain);color:var(--on-curtain);padding:2px 9px;border-radius:6px}
+nav{display:flex;gap:22px}
+nav a{text-decoration:none;font-weight:600;font-size:.95rem}
+nav a:hover{text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:3px;text-underline-offset:6px}
+@media(max-width:720px){nav{display:none}}
+.mobnav{display:none;gap:8px;overflow-x:auto;padding:8px 20px;border-top:1px solid var(--line)}
+.mobnav a{white-space:nowrap;text-decoration:none;font-weight:600;font-size:.9rem;padding:6px 14px;border-radius:99px;background:var(--sage)}
+@media(max-width:720px){.mobnav{display:flex}}
+.hero{background:var(--curtain);color:var(--on-curtain);padding:44px 0 56px}
+.marquee{border:3px solid var(--gold);border-radius:14px;padding:34px 22px 30px;position:relative;max-width:760px}
+.marquee::before,.marquee::after{content:"";position:absolute;left:12px;right:12px;height:8px;background:radial-gradient(circle,var(--gold) 3px,transparent 3.5px) 0 0/22px 8px repeat-x}
+.marquee::before{top:8px}.marquee::after{bottom:8px}
+.hero h1{font-size:clamp(2.2rem,7vw,4.2rem);font-weight:800;margin:14px 0}
+.hero p{margin:0 0 22px;max-width:46ch;font-size:1.1rem}
+.status{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);padding:6px 14px;border-radius:99px;font-weight:600;font-size:.95rem}
+.dot{width:10px;height:10px;border-radius:50%;background:#999}
+.dot.open{background:#5fe08a;animation:pulse 2s ease-in-out 3}
+@keyframes pulse{50%{transform:scale(1.3)}}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:2px solid var(--gold)}
+.btn.gold{background:var(--gold);color:#2a1d00}
+.btn.ghost{color:var(--on-curtain)}
+.btn:hover{filter:brightness(1.1)}
+section{padding:56px 0}
+section h2{font-size:clamp(1.8rem,5vw,2.6rem);margin-bottom:8px}
+.lede{color:var(--mute);margin:0 0 26px;max-width:56ch}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px}
+.days button{font:600 .95rem Figtree,sans-serif;padding:9px 16px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
+.days button[aria-selected="true"]{background:var(--curtain);border-color:var(--curtain);color:var(--on-curtain)}
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.ticket{background:var(--card);border-radius:12px;display:flex;border:1px solid var(--line);overflow:hidden}
+.stub{width:84px;flex:none;background:var(--gold);color:#2a1d00;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.6rem;border-right:3px dashed rgba(42,29,0,.4);padding:10px 4px}
+.tbody{padding:16px 18px}
+.tbody h3{font-size:1.2rem;margin-bottom:4px}
+.tbody p{margin:0;color:var(--mute);font-size:.95rem}
+.note{font-size:.88rem;color:var(--mute);margin-top:16px}
+.band{background:var(--sage)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.chips button{font:600 .9rem Figtree,sans-serif;padding:7px 15px;border-radius:8px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.item{background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.ph{height:120px;display:grid;place-items:center;font:800 .8rem "Bricolage Grotesque",sans-serif;color:rgba(255,255,255,.9)}
+.item .t{padding:12px 14px}
+.item h3{font-size:1.05rem}
+.item p{margin:2px 0 0;font-size:.88rem;color:var(--mute)}
+.badge{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;background:var(--sage);padding:2px 9px;border-radius:99px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px}
+.panel h3{font-size:1.4rem;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+td{padding:8px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;font-weight:600}
+tr.today td{color:var(--hl);font-weight:800}
+.map{margin-top:16px;height:140px;border-radius:10px;background:repeating-linear-gradient(45deg,var(--sage) 0 12px,var(--bg) 12px 24px);display:grid;place-items:center;text-align:center;font-weight:600;padding:10px}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{margin:4px 0}
+.mission{background:var(--curtain);color:var(--on-curtain)}
+.mission p{max-width:60ch;font-size:1.15rem}
+footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-size:.92rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.calhead h3{font-size:1.5rem}
+.calhead button{font:600 1rem Figtree,sans-serif;width:44px;height:44px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dow{text-align:center;font-weight:600;font-size:.82rem;color:var(--mute);padding:4px 0}
+.cell{min-height:64px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px;text-align:left;font:600 .95rem Figtree,sans-serif;cursor:pointer;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.cell.off{background:transparent;border-style:dashed;color:var(--mute);cursor:default}
+.cell.blank{visibility:hidden}
+.cell small{font-weight:400;font-size:.72rem;line-height:1.2;color:var(--mute)}
+.cell .pip{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.cell.today{border:2px solid var(--curtain)}
+.cell[aria-pressed="true"]{background:var(--curtain);color:var(--on-curtain);border-color:var(--curtain)}
+.cell[aria-pressed="true"] small{color:var(--on-curtain)}
+@media(max-width:620px){.cell{min-height:48px;padding:4px}.cell small{display:none}}
+#caldetail{margin-top:16px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap bar">
+  <a class="logo" href="#top" aria-label="2nd Act Thrift Store home"><b>2nd</b> Act Thrift</a>
+  <nav aria-label="Main"><a href="#deals">Daily deals</a><a href="#calendar">Calendar</a><a href="#incoming">Just in</a><a href="#visit">Visit</a><a href="#donate">Donate</a><a href="#mission">Our mission</a></nav>
+ </div>
+ <div class="mobnav"><a href="#deals">Deals</a><a href="#calendar">Calendar</a><a href="#incoming">Just in</a><a href="#visit">Visit</a><a href="#donate">Donate</a></div>
+</header>
+
+<main id="top">
+<div class="hero">
+ <div class="wrap">
+  <div class="marquee">
+   <span class="status"><i class="dot" id="dot"></i><span id="statusText">Checking hours…</span></span>
+   <h1>Every good thing deserves an encore.</h1>
+   <p>Affordable, quality finds in Teton Valley. Every dollar left after expenses supports local art, cinema and theater.</p>
+   <div class="btns"><a class="btn gold" href="#deals">See today's deals</a><a class="btn ghost" href="#visit">Plan your visit</a></div>
+  </div>
+ </div>
+</div>
+
+<section id="deals">
+ <div class="wrap">
+  <h2>Daily deals</h2>
+  <p class="lede">A new deal every day we're open. Pick a day to see what's on sale.</p>
+  <div class="days" id="days" role="tablist" aria-label="Deal day"></div>
+  <div class="tickets" id="tickets" role="tabpanel"></div>
+  <p class="note">Sample deals for this mock-up. The store team would post real ones from a simple form.</p>
+ </div>
+</section>
+
+<section id="calendar">
+ <div class="wrap">
+  <h2>Deal calendar</h2>
+  <p class="lede">Plan your trip around the month's deals. Tap a day for details. Dashed days are closed.</p>
+  <div class="calhead"><button id="prev" aria-label="Previous month">&lsaquo;</button><h3 id="monthName" aria-live="polite"></h3><button id="next" aria-label="Next month">&rsaquo;</button></div>
+  <div class="grid" id="calgrid"></div>
+  <div class="panel" id="caldetail" aria-live="polite"></div>
+  <p class="note">Sample schedule for this mock-up. It could replace the monthly Reel Deal calendar image with a version that's easy to edit and read on a phone.</p>
+ </div>
+</section>
+
+<section id="incoming" class="band">
+ <div class="wrap">
+  <h2>Just in</h2>
+  <p class="lede">Fresh donations headed to the sales floor. Filter by what you're hunting for.</p>
+  <div class="chips" id="chips"></div>
+  <div class="items" id="items"></div>
+ </div>
+</section>
+
+<section id="visit">
+ <div class="wrap split">
+  <div class="panel">
+   <h3>Store hours</h3>
+   <table id="hours"></table>
+   <p style="margin:14px 0 0;color:var(--mute);font-size:.92rem">Winter hours. Call ahead to arrange a more convenient drop-off time.</p>
+  </div>
+  <div class="panel">
+   <h3>Find us</h3>
+   <p style="margin:0">7168 S Highway 33<br>Victor, ID 83455</p>
+   <p style="margin:10px 0 0;color:var(--mute)">Just north of Victor. Look for the 2-story grey building next to Trail Creek Nursery.</p>
+   <p style="margin:12px 0 0"><a href="tel:2087091584"><strong>208-709-1584</strong></a> (store)</p>
+   <div class="map" role="img" aria-label="Map placeholder">Map goes here<br>(Google Maps embed on the live site)</div>
+  </div>
+ </div>
+</section>
+
+<section id="donate" class="band">
+ <div class="wrap">
+  <h2>Donate your items</h2>
+  <p class="lede">No appointment needed. Drop off during store hours only; zoning doesn't allow items left outside. Tax receipts available on request.</p>
+  <div class="split">
+   <div class="panel"><h3>We gladly take</h3><ul class="plain"><li>Clothing and shoes</li><li>Housewares and kitchenware</li><li>Books, games and décor</li><li>Electronics from 2020 or newer</li></ul></div>
+   <div class="panel"><h3>We can't accept</h3><ul class="plain"><li>Tires</li><li>Mattresses and couches</li><li>Printers</li><li>Electronics older than 2020</li><li>Large appliances</li><li>Hazardous materials</li></ul></div>
+  </div>
+ </div>
+</section>
+
+<section id="mission" class="mission">
+ <div class="wrap">
+  <h2>Thrift with a purpose</h2>
+  <p>2nd Act was started by Milissa West, who brought 14 years of retail management to her dream of a thrift store that truly serves its mission. Revenue beyond operating costs sustains art, cinema and theater programs in Teton Valley.</p>
+  <div class="btns"><a class="btn gold" href="https://actfoundationtvi.org/" rel="noopener">Visit ACT Foundation</a></div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <div><strong>2nd Act Thrift Store</strong><br>7168 S Highway 33, Victor, ID 83455<br>208-709-1584</div>
+  <div>actfoundationtvi@gmail.com<br>Facebook, Instagram, YouTube: @actfoundationtvi</div>
+  <div>Design mock-up. Not the live site.</div>
+ </div>
+</footer>
+
+<script>
+var DEALS={
+Mon:[["50%","Winter coats","Jackets, parkas and fleeces, half off."],["$2","Paperbacks","Fill a bag with fiction."]],
+Tue:[["25%","Kitchenware","Pots, pans and small appliances."],["$3","Mugs","A mix of mismatched local favorites."]],
+Wed:[["50%","Tag of the day","Ask at the register for today's color."],["$5","Denim","Any jeans on the rack."]],
+Thu:[["30%","Home décor","Frames, vases and wall art."],["$1","Kids' books","Stock the bookshelf."]],
+Fri:[["40%","Sweaters","Wool, cotton and everything cozy."],["BOGO","Board games","Buy one, get one free."]],
+Sat:[["$10","Fill-a-bag","One grocery bag of clothing, your pick."],["20%","Everything else","Weekend wrap-up sale."]]};
+var HOURS=[["Mon","Monday","10 AM – 4 PM",10,16],["Tue","Tuesday","10 AM – 4 PM",10,16],["Wed","Wednesday","10 AM – 4 PM",10,16],["Thu","Thursday","10 AM – 4 PM",10,16],["Fri","Friday","10 AM – 4 PM",10,16],["Sat","Saturday","10 AM – 2 PM",10,14],["Sun","Sunday","Closed",0,0]];
+var ITEMS=[["Wool peacoat","Women's M, barely worn","Clothing","#7b1e2e"],["Cast-iron skillet","10-inch, seasoned","Housewares","#2f5d62"],["Hardcover mystery set","12 titles","Books","#4a3b6b"],["Brass table lamp","Works great","Décor","#8a6a1f"],["Kids' snow boots","Sizes 1–3","Clothing","#7b1e2e"],["Stoneware dinner set","Service for 6","Housewares","#2f5d62"],["Framed mountain print","24 × 36 in","Décor","#8a6a1f"],["Cookbook collection","8 titles","Books","#4a3b6b"]];
+function mtNow(){var o={};new Intl.DateTimeFormat("en-US",{timeZone:"America/Denver",weekday:"short",hour:"numeric",minute:"numeric",hour12:false}).formatToParts(new Date()).forEach(function(x){o[x.type]=x.value});return{d:o.weekday,h:(+o.hour%24)+(+o.minute)/60}}
+var now=mtNow();
+var row=HOURS.filter(function(r){return r[0]===now.d})[0],open=row&&now.h>=row[3]&&now.h<row[4];
+document.getElementById("dot").className="dot"+(open?" open":"");
+document.getElementById("statusText").textContent=open?"Open now until "+(row[4]-12)+" PM":"Closed right now";
+document.getElementById("hours").innerHTML=HOURS.map(function(r){return '<tr'+(r[0]===now.d?' class="today"':'')+'><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join("");
+var keys=Object.keys(DEALS),sel=DEALS[now.d]?now.d:"Mon";
+function drawDeals(){
+ document.getElementById("days").innerHTML=keys.map(function(k){return '<button role="tab" data-d="'+k+'" aria-selected="'+(k===sel)+'">'+(k===now.d?"Today":k)+'</button>'}).join("");
+ document.getElementById("tickets").innerHTML=DEALS[sel].map(function(d){return '<article class="ticket"><div class="stub">'+d[0]+'</div><div class="tbody"><h3>'+d[1]+'</h3><p>'+d[2]+'</p></div></article>'}).join("");
+}
+document.getElementById("days").addEventListener("click",function(e){var b=e.target.closest("button");if(b){sel=b.dataset.d;drawDeals()}});
+drawDeals();
+var cats=["All"].concat(ITEMS.map(function(i){return i[2]}).filter(function(v,i,a){return a.indexOf(v)===i})),cat="All";
+function drawItems(){
+ document.getElementById("chips").innerHTML=cats.map(function(c){return '<button aria-pressed="'+(c===cat)+'" data-c="'+c+'">'+c+'</button>'}).join("");
+ document.getElementById("items").innerHTML=ITEMS.filter(function(i){return cat==="All"||i[2]===cat}).map(function(i){return '<article class="item"><div class="ph" style="background:'+i[3]+'">PHOTO</div><div class="t"><h3>'+i[0]+'</h3><p>'+i[1]+'</p><span class="badge">'+i[2]+'</span></div></article>'}).join("");
+}
+document.getElementById("chips").addEventListener("click",function(e){var b=e.target.closest("button");if(b){cat=b.dataset.c;drawItems()}});
+drawItems();
+/* calendar */
+var DK=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var tp={};new Intl.DateTimeFormat("en-US",{timeZone:"America/Denver",year:"numeric",month:"numeric",day:"numeric"}).formatToParts(new Date()).forEach(function(x){tp[x.type]=+x.value});
+var cy=tp.year,cm=tp.month-1,cd=tp.day;
+function hrsFor(k){var r=HOURS.filter(function(h){return h[0]===k})[0];return r[2]}
+function showDay(y,m,d){
+ var k=DK[new Date(y,m,d).getDay()],t=MN[m]+" "+d,box=document.getElementById("caldetail");
+ if(!DEALS[k]){box.innerHTML='<h3>'+t+'</h3><p style="margin:0">Closed Sundays. We reopen Monday at 10 AM.</p>';return}
+ box.innerHTML='<h3>'+t+'</h3><p style="margin:0 0 12px;color:var(--mute)">Open '+hrsFor(k)+'</p><div class="tickets">'+DEALS[k].map(function(x){return '<article class="ticket"><div class="stub">'+x[0]+'</div><div class="tbody"><h3>'+x[1]+'</h3><p>'+x[2]+'</p></div></article>'}).join("")+'</div>';
+}
+function drawCal(){
+ document.getElementById("monthName").textContent=MN[cm]+" "+cy;
+ var first=new Date(cy,cm,1).getDay(),days=new Date(cy,cm+1,0).getDate(),h=DK.map(function(d){return '<div class="dow">'+d+'</div>'}).join("");
+ for(var i=0;i<first;i++)h+='<div class="cell blank"></div>';
+ for(var d=1;d<=days;d++){
+  var k=DK[new Date(cy,cm,d).getDay()],isT=(cy===tp.year&&cm===tp.month-1&&d===tp.day);
+  h+=DEALS[k]?'<button class="cell'+(isT?' today':'')+'" data-d="'+d+'" aria-pressed="false" aria-label="'+MN[cm]+' '+d+(isT?', today':'')+'">'+d+'<small>'+DEALS[k][0][0]+' '+DEALS[k][0][1]+'</small><i class="pip"></i></button>':'<div class="cell off" aria-label="'+MN[cm]+' '+d+', closed">'+d+'<small>Closed</small></div>';
+ }
+ document.getElementById("calgrid").innerHTML=h;
+ var sd=(cy===tp.year&&cm===tp.month-1)?cd:1;
+ if(!DEALS[DK[new Date(cy,cm,sd).getDay()]])sd=(sd+1>days)?sd-1:(DEALS[DK[new Date(cy,cm,sd+1).getDay()]]?sd+1:sd);
+ var b=document.querySelector('.cell[data-d="'+sd+'"]');
+ if(b){b.setAttribute("aria-pressed","true");showDay(cy,cm,sd)}else showDay(cy,cm,sd);
+}
+document.getElementById("calgrid").addEventListener("click",function(e){var b=e.target.closest(".cell[data-d]");if(!b)return;document.querySelectorAll(".cell[aria-pressed]").forEach(function(c){c.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");showDay(cy,cm,+b.dataset.d)});
+document.getElementById("prev").onclick=function(){cm--;if(cm<0){cm=11;cy--}drawCal()};
+document.getElementById("next").onclick=function(){cm++;if(cm>11){cm=0;cy++}drawCal()};
+drawCal();
+</script>
+</body>
+</html>
